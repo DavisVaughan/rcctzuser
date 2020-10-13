@@ -5,11 +5,10 @@
 #include "cpp11/declarations.hpp"
 
 // code.cpp
-void fun();
+cpp11::doubles fun();
 extern "C" SEXP _rcctzuser_fun() {
   BEGIN_CPP11
-    fun();
-    return R_NilValue;
+    return cpp11::as_sexp(fun());
   END_CPP11
 }
 
