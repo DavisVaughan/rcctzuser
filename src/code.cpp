@@ -2,13 +2,13 @@
 #include <rcctz.h>
 
 [[cpp11::register]]
-cpp11::doubles fun() {
+cpp11::doubles fun(cpp11::strings tzone) {
   cctz::civil_second cs = cctz::civil_second(2020, 1, 5, 1, 1, 1);
 
   cctz::time_zone tz;
-  const char* c_tz = "America/New_York";
+  std::string cpp_tz = rcctz::tz_from_tzone(tzone);
 
-  if (!rcctz::tz_load(c_tz, &tz)) {
+  if (!rcctz::tz_load(cpp_tz, &tz)) {
     cpp11::stop("Failed to load time zone.");
   }
 
@@ -31,7 +31,7 @@ cpp11::doubles fun() {
   }
 
   out.attr("class") = {"POSIXct", "POSIXt"};
-  out.attr("tzone") = c_tz;
+  out.attr("tzone") = cpp_tz;
 
   return out;
 }

@@ -5,19 +5,19 @@
 #include "cpp11/declarations.hpp"
 
 // code.cpp
-cpp11::doubles fun();
-extern "C" SEXP _rcctzuser_fun() {
+cpp11::doubles fun(cpp11::strings tzone);
+extern "C" SEXP _rcctzuser_fun(SEXP tzone) {
   BEGIN_CPP11
-    return cpp11::as_sexp(fun());
+    return cpp11::as_sexp(fun(cpp11::as_cpp<cpp11::decay_t<cpp11::strings>>(tzone)));
   END_CPP11
 }
 
 extern "C" {
 /* .Call calls */
-extern SEXP _rcctzuser_fun();
+extern SEXP _rcctzuser_fun(SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_rcctzuser_fun", (DL_FUNC) &_rcctzuser_fun, 0},
+    {"_rcctzuser_fun", (DL_FUNC) &_rcctzuser_fun, 1},
     {NULL, NULL, 0}
 };
 }
