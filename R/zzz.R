@@ -1,4 +1,5 @@
 .onLoad <- function(libname, pkgname) {
-  # Required to access C++ callables
+  # Loading the package is required to register the C++ callables.
+  # We Import it so this should always work.
   requireNamespace("rcctz", quietly = TRUE)
 }
